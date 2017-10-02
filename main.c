@@ -45,6 +45,7 @@ void configureRegisters();
 unsigned int checkIfLeftButtonPressed();
 unsigned int checkIfRightButtonPressed();
 void handleButtonPressed();
+void configureClock();
 void delay(unsigned int);
 void switchOnDS2();
 void switchOffDS2();
@@ -91,8 +92,12 @@ void switchOffDS1() {
 }
 
 void configureRegisters() {
+  configureClock();
   configureLEDs();
   configurreButtons();
+}
+
+void configureClock() {
   *PMC_PCER = SET_CLOCK;
 }
 
