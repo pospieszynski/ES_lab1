@@ -117,7 +117,7 @@ void configurreButtons() {
   // By setting output disable register we immediately say that we want default input mode(because buttons are used as an input peripherial)
   // Since PER is already enabled we don't have to do this again and we can perform further configuration
   *PIOC_ODR = SET_BP1;
-  *PIOC_ODR = SET_BP;
+  *PIOC_ODR = SET_BP2;
 
   // TODO: Enable Pull-ups to ensure state 1 when button is released
   //*PIO_PUER
@@ -136,7 +136,7 @@ unsigned int checkIfLeftButtonPressed() {
 }
 
 unsigned int checkIfRightButtonPressed() {
-  (~(*PIOC_PDSR & SET_BP)) ? return 1 : return 0;
+  (~(*PIOC_PDSR & SET_BP2)) ? return 1 : return 0;
 }
 
 void delay(unsigned int delay) {
