@@ -2,11 +2,11 @@ dbgu_print_ascii(const char *a) {}
 
 #define SET_DS_1 1<<8
 #define SET_DS_2 1<<29
-#define SET_BP2 1<<4
 #define SET_BP1 1<<5
+#define SET_BP2 1<<4
 #define SET_CLOCK  1<<4
 
-#define DELAY_VALUE 100000
+#define DELAY_VALUE 1000
 #define SWITCH_LED 100000
 
 
@@ -41,17 +41,16 @@ volatile unsigned int *PIOC_PDSR = (volatile unsigned int *) 0xFFFFF63C;
 
 void configureLEDs();
 void configurreButtons();
-void configureRegisters();
-unsigned int checkIfLeftButtonPressed();
-unsigned int checkIfRightButtonPressed();
-void handleButtonPressed();
 void configureClock();
-void delay(unsigned int);
+void configureRegisters();
 void switchOnDS2();
 void switchOffDS2();
 void switchOnDS1();
 void switchOffDS1();
-
+void handleButtonPressed();
+unsigned int checkIfLeftButtonPressed();
+unsigned int checkIfRightButtonPressed();
+void delay(unsigned int);
 
 int main() {
   
@@ -107,14 +106,14 @@ void configureLEDs() {
   // By defult, IO mode is set to input but we want diods to be used as an output(blinking)
   *PIOB_OER = SET_DS_1;
   // Switch off DS1 by default
-  *PIOC_SODR = SET_DS_1;
+  switchOffDS1();
 
 // Peripherial enable register must be configured to set IO port in IO mode and enable further configuration
   *PIOC_PER = SET_DS_2;
   // By defult, IO mode is set to input but we want diods to be used as an output(blinking)
   *PIOC_OER = SET_DS_2;
   //switch off DS2 by default
-  *PIOC_SODR = SET_DS_2;
+  switchOffDS2()
 }
 
 void configurreButtons() {
@@ -122,20 +121,19 @@ void configurreButtons() {
   *PIOC_ODR = SET_BP1;
   *PIOC_PUER = SET_BP1;
 
-
   *PIOC_PER = SET_BP2;
   *PIOC_ODR = SET_BP2;
   *PIOC_PUER = SET_BP2;
-  
+
   //after that on register bit associatd with BP1 we have 0 since we overwritten it but this does not mean that it is disabled. to do that we would have to use PU disable registers
 }
 
 void handleButtonPressed() {
   if(checkIfRightButtonPressed())
-    switchOnDS1(); 
+    switchOffDS1();
   
   if (checkIfLeftButtonPressed())
-    switchOffDS1();
+    switchOnDS1(); 
 }
 
 unsigned int checkIfLeftButtonPressed() {
