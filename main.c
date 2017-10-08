@@ -106,24 +106,27 @@ void configureLEDs() {
   *PIOB_PER = SET_DS_1;
   // By defult, IO mode is set to input but we want diods to be used as an output(blinking)
   *PIOB_OER = SET_DS_1;
+  // Switch off DS1 by default
+  *PIOC_SODR = SET_DS_1;
 
 // Peripherial enable register must be configured to set IO port in IO mode and enable further configuration
   *PIOC_PER = SET_DS_2;
   // By defult, IO mode is set to input but we want diods to be used as an output(blinking)
   *PIOC_OER = SET_DS_2;
+  //switch off DS2 by default
+  *PIOC_SODR = SET_DS_2;
 }
 
 void configurreButtons() {
-  // By setting output disable register we immediately say that we want default input mode(because buttons are used as an input peripherial)
-  // Since PER is already enabled we don't have to do this again and we can perform further configuration
-
-  // TODO WHY PIOC_PER no enabled????
+  *PIOC_PER = SET_BP1;
   *PIOC_ODR = SET_BP1;
-  *PIOC_ODR = SET_BP2;
-
-  // Enable Pull-ups to ensure state 1 when button is released
   *PIOC_PUER = SET_BP1;
+
+
+  *PIOC_PER = SET_BP2;
+  *PIOC_ODR = SET_BP2;
   *PIOC_PUER = SET_BP2;
+  
   //after that on register bit associatd with BP1 we have 0 since we overwritten it but this does not mean that it is disabled. to do that we would have to use PU disable registers
 }
 
