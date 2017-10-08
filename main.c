@@ -116,6 +116,8 @@ void configureLEDs() {
 void configurreButtons() {
   // By setting output disable register we immediately say that we want default input mode(because buttons are used as an input peripherial)
   // Since PER is already enabled we don't have to do this again and we can perform further configuration
+
+  // TODO WHY PIOC_PER no enabled????
   *PIOC_ODR = SET_BP1;
   *PIOC_ODR = SET_BP2;
 
