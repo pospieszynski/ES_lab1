@@ -18,7 +18,7 @@ volatile unsigned int* PIOC_PER = (volatile unsigned int)0xFFFFF600;
 volatile unsigned int PMC_PCER = volatile unsigned int(0x0010); 
 
 // Pull Up Enable Register
-volatile unsigned int PIO_PUER = volatile unsigned int(0x0F0FFF0F);
+volatile unsigned int PIOC_PUER = volatile unsigned int(0xFFFFF664);
 
 // Output Enable Registers for controllers B and C
 volatile unsigned int* PIOB_OER = (volatile unsigned int)0xFFFFF410;
@@ -119,8 +119,10 @@ void configurreButtons() {
   *PIOC_ODR = SET_BP1;
   *PIOC_ODR = SET_BP2;
 
-  // TODO: Enable Pull-ups to ensure state 1 when button is released
-  //*PIO_PUER
+  // Enable Pull-ups to ensure state 1 when button is released
+  *PIOC_PUER = SET_BP1;
+  *PIOC_PUER = SET_BP2;
+  //after that on register bit associatd with BP1 we have 0 since we overwritten it but this does not mean that it is disabled. to do that we would have to use PU disable registers
 }
 
 void handleButtonPressed() {
