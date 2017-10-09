@@ -10,8 +10,8 @@ dbgu_print_ascii(const char *a) {}
 #define SET_BP2 (1<<4)
 #define SET_CLOCK  (1<<4)
 
-#define DELAY_VALUE 1000
-#define SWITCH_LED 100000
+#define DELAY_VALUE 70
+#define SWITCH_LED 1000000
 
 
 // Peripherial Enable Registers for controller B and C
